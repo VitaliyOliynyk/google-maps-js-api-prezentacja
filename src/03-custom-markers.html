@@ -21,16 +21,15 @@
 <body>
 <div id="map"></div>
 <script>
-    var map;
     function initMap() {
-        map = new google.maps.Map(
+        const map = new google.maps.Map(
             document.getElementById('map'),
             {center: new google.maps.LatLng(-33.91722, 151.23064), zoom: 16});
 
-        var iconBase =
+        const iconBase =
             'images/';
 
-        var icons = {
+        const icons = {
             parking: {
                 icon: iconBase + 'parking_lot_maps.png'
             },
@@ -42,7 +41,7 @@
             }
         };
 
-        var features = [
+        const features = [
             {
                 position: new google.maps.LatLng(-33.91721, 151.22630),
                 type: 'info'
@@ -104,8 +103,8 @@
         ];
 
         // Create markers.
-        for (var i = 0; i < features.length; i++) {
-            var marker = new google.maps.Marker({
+        for (let i = 0; i < features.length; i++) {
+            const marker = new google.maps.Marker({
                 position: features[i].position,
                 icon: icons[features[i].type].icon,
                 map: map

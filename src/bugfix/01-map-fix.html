@@ -23,8 +23,6 @@
 <div id="out"></div>
 <script>
     function initMap() {
-
-
         const map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 52.237227, lng: 20.982026},
             zoom: 8
@@ -43,7 +41,7 @@
             'getZoom'
         ];
 
-        var badMethods = methods.filter(m => {
+        const badMethods = methods.filter(m => {
             return m.startsWith('get') && (map[m]() === undefined || map[m]() === null);
         });
 
@@ -62,7 +60,6 @@
             out += '</table>';
             document.getElementById("out").innerHTML += out;
         }
-
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyNO5HbthnD6uHpnzXfp2C8JbHP3Z3G3Y&callback=initMap" async defer></script>
