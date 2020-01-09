@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map" style="height: 500px"></div>
+<div id="out"></div>
+<script>
+    function initMap() {
+
+
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 52.237227, lng: 20.982026},
+            zoom: 8
+        });
+
+        const methods = [
+            'getBounds',
+            'getCenter',
+            'getClickableIcons',
+            'getDiv',
+            'getHeading',
+            'getMapTypeId',
+            'getProjection',
+            'getStreetView',
+            'getTilt',
+            'getZoom'
+        ];
+
+        var badMethods = methods.filter(m => {
+            return m.startsWith('get') && (map[m]() === undefined || map[m]() === null);
+        });
+
+        printMethods(badMethods);
+        document.getElementById("out").innerHTML += '<br/>';
+
+        new Promise((resolve) => {
+            map.addListener("idle", () => {
+                resolve(badMethods);
+            });
+        }).then(printMethods);
+
+        function printMethods(methods) {
+            let out = '<table>';
+            methods.forEach((m) => out += (`<tr><td>map.${m}():</td><td>${map[m]()}</td></tr>`));
+            out += '</table>';
+            document.getElementById("out").innerHTML += out;
+        }
+
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyNO5HbthnD6uHpnzXfp2C8JbHP3Z3G3Y&callback=initMap" async defer></script>
+</body>
+</html>
