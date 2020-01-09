@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map" style="height: 500px"></div>
+<div id="out"></div>
+<script>
+    // This example displays a marker at the center of Australia.
+    // When the user clicks the marker, an info window opens.
+
+    function initMap() {
+        const brzeska = {lat: 52.252354, lng: 21.042391};
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: brzeska
+        });
+
+        const contentString =
+            `<div id="content">
+                <div id="siteNotice"></div>
+                <h1 id="firstHeading" class="firstHeading">Ulica Brzeska w Warszawie</h1>
+                <div id="bodyContent">
+                    <b>Ulica Brzeska</b> – ulica na Pradze-Północ w Warszawie, biegnąca od ul. Kijowskiej do ul. Białostockiej.
+                    Ulica jest jednym z reliktów dawnej Pragi przełomu XIX i XX wieku. Jest uważana za centrum
+                    tzw. północnopraskiego trójkąta bermudzkiego. czyli najniebezpieczniejszej części dzielnicy.
+                    Wyznacza także wschodnią pierzeję bazaru Różyckiego.
+                    <p>źródło:<a href="https://pl.wikipedia.org/wiki/Ulica_Brzeska_w_Warszawie">https://pl.wikipedia.org/wiki/Ulica_Brzeska_w_Warszawie</a></p>
+                </div>
+            </div>`;
+
+        const infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        const marker = new google.maps.Marker({
+            position: brzeska,
+            map: map,
+            title: 'Uluru (Ayers Rock)'
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyNO5HbthnD6uHpnzXfp2C8JbHP3Z3G3Y&callback=initMap" async defer></script>
+</body>
+</html>
