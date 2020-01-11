@@ -52,11 +52,15 @@
             geodesic: true,
             strokeColor: '#FF0000',
             strokeOpacity: 1.0,
-            strokeWeight: 2
+            strokeWeight: 8
         });
         droga.setMap(map);
         zOgrodowDoTower.forEach((position, i) => {
             new google.maps.Marker({position: position, map: map, label:`${i+1}`})
+        });
+
+        droga.addListener('click', () => {
+           console.log(droga.getPath().getArray().map((point) => ({lat:point.lat(), lng:point.lng()})));
         });
     }
 </script>
