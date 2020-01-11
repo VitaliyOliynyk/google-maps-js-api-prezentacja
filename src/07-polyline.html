@@ -28,26 +28,36 @@
 
     function initMap() {
         const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 3,
-            center: {lat: 0, lng: -180},
+            zoom: 16,
+            center: {lat: 52.237980, lng: 20.990043},
             mapTypeId: 'terrain'
         });
 
-        const flightPlanCoordinates = [
-            {lat: 37.772, lng: -122.214},
-            {lat: 21.291, lng: -157.821},
-            {lat: -18.142, lng: 178.431},
-            {lat: -27.467, lng: 153.027}
-        ];
-        const flightPath = new google.maps.Polyline({
-            path: flightPlanCoordinates,
+        const zOgrodowDoTower = [
+            [52.237275, 20.983058],
+            [52.237347, 20.983375],
+            [52.236177, 20.984716],
+            [52.235597, 20.980778],
+            [52.236965, 20.980435],
+            [52.239155, 20.985583],
+            [52.241757, 20.993479],
+            [52.239451, 20.995485],
+            [52.233233, 20.997737],
+            [52.233450, 20.998509],
+            [52.236295, 20.997093]
+        ].map((position) => ({lat: position[0], lng: position[1]}));
+        
+        const droga = new google.maps.Polyline({
+            path: zOgrodowDoTower,
             geodesic: true,
             strokeColor: '#FF0000',
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
-
-        flightPath.setMap(map);
+        droga.setMap(map);
+        zOgrodowDoTower.forEach((position, i) => {
+            new google.maps.Marker({position: position, map: map, label:`${i+1}`})
+        });
     }
 </script>
 <script async defer

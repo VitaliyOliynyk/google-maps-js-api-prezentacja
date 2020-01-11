@@ -16,10 +16,14 @@
         const warszawa = {lat: 52.237227, lng: 20.982026};
         const map = new google.maps.Map(document.getElementById('map'), {
             center: warszawa,
-            zoom: 4
+            zoom: 16,
+
         });
-        const marker = new google.maps.Marker({position: warszawa, map: map});
-        marker.setLabel('Mi');
+        const marker = new google.maps.Marker({
+            position: warszawa,
+            map: map,
+            label: 'pz'
+        });
     }
 </script>
 <script async defer
