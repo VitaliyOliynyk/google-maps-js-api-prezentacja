@@ -107,6 +107,7 @@
             const marker = new google.maps.Marker({
                 position: features[i].position,
                 icon: icons[features[i].type].icon,
+                animation:{'parking': google.maps.Animation.DROP, 'info': google.maps.Animation. BOUNCE}[features[i].type],
                 map: map
             });
         };
