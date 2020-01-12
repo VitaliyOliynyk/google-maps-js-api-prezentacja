@@ -42,7 +42,7 @@
         ];
 
         const badMethods = methods.filter(m => {
-            return m.startsWith('get') && (map[m]() === undefined || map[m]() === null);
+            return map[m]() === undefined || map[m]() === null;
         });
 
         printMethods(badMethods);

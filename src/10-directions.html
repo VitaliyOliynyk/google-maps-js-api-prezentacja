@@ -54,10 +54,10 @@
         });
         directionsRenderer.setMap(map);
 
-        const onChangeHandler = function () {
+        const onClickHandler = function () {
             calculateAndDisplayRoute(directionsService, directionsRenderer);
         };
-        document.getElementById('submit').addEventListener('click', onChangeHandler);
+        document.getElementById('submit').addEventListener('click', onClickHandler);
     }
 
     function calculateAndDisplayRoute(directionsService, directionsRenderer) {

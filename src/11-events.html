@@ -1,0 +1,111 @@
+
+<!doctype html>
+<html lang="en"      dir="ltr">
+<head>
+    <title>Google Developers</title>
+    <meta name="robots" content="noindex">
+    <meta charset="utf-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body >
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Events Explorer</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+        }
+        .event {
+            transition: background-color 0.5s ease-out;
+            padding-bottom: 2px;
+        }
+        #map {
+            float: left;
+            width: 600px;
+            height: 400px;
+            margin-right: 10px;
+        }
+        #events {
+            padding: 2px;
+            overflow: hidden;
+            font-size: 15px;
+            font-family: 'Droid Sans Mono', monospace;
+        }
+        .active {
+            background-color: #99CCFF;
+        }
+        .inactive {
+            background-color: white;
+        }
+    </style>
+    <script>
+        var map;
+        var events = [
+            'bounds_changed', 'center_changed', 'click',
+            'dblclick', 'drag', 'dragend',
+            'dragstart', 'heading_changed', 'idle',
+            'maptypeid_changed', 'mousemove', 'mouseout',
+            'mouseover', 'projection_changed', 'resize',
+            'rightclick', 'tilesloaded', 'tilt_changed',
+            'zoom_changed'
+        ];
+
+        function setupListener(name) {
+            var eventRow = document.getElementById(name);
+            google.maps.event.addListener(map, name, function() {
+                eventRow.className = 'event active';
+                var timeout = setTimeout(function() {
+                    eventRow.className = 'event inactive';
+                }, 2000);
+            });
+        }
+
+        function initialize() {
+            populateTable();
+            var mapDiv = document.getElementById('map');
+            map = new google.maps.Map(mapDiv, {
+                center: new google.maps.LatLng(37.4419, -122.1419),
+                zoom: 13,
+                mapTypeId: 'roadmap'
+            });
+
+            events.forEach(setupListener);
+        }
+
+        // Dynamically create the table of events from the defined hashmap
+        function populateTable() {
+            var eventsTable = document.getElementById('events');
+            var content = '';
+            for (var i = 0; i < events.length; i++) {
+                content += '<div class="event" id="' + events[i] + '">' + events[i] +
+                    '</div>';
+            }
+            eventsTable.innerHTML = content;
+        }
+
+        // Load the map
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+<body>
+<div id="main">
+    <div id="map">
+    </div>
+    <div id="events">
+    </div>
+</div>
+</body>
+</html>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyNO5HbthnD6uHpnzXfp2C8JbHP3Z3G3Y&callback=initialize"></script>
+</body>
+</html>

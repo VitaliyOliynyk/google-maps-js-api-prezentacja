@@ -126,12 +126,15 @@
     // parameter when you first load the API. For example:
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-    //https://developers-dot-devsite-v2-prod.appspot.com/maps/documentation/javascript/examples/full/places-autocomplete
+    /*
+        https://developers-dot-devsite-v2-prod.appspot.com/maps/documentation/javascript/examples/full/places-autocomplete
+     */
     function initMap() {
         const map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 52.237980, lng: 20.990043},
             zoom: 13
         });
+
         const card = document.getElementById('pac-card');
         const input = document.getElementById('pac-input');
         const types = document.getElementById('type-selector');
