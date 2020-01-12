@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Directions Service</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #floating-panel {
+            position: absolute;
+            top: 10px;
+            left: 25%;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999;
+            text-align: center;
+            font-family: 'Roboto','sans-serif';
+            line-height: 30px;
+            padding-left: 2px;
+            width: 550px;
+        }
+    </style>
+</head>
+<body>
+<div id="floating-panel">
+    <b>Start: </b>
+    <input type="text" id="start"/>
+    <b>End: </b>
+    <input type="text" id="end"/>
+    <input type="submit" value="wyznacz drogę" id="submit"></input>
+</div>
+<div id="map"></div>
+<script>
+    /*
+    https://developers-dot-devsite-v2-prod.appspot.com/maps/documentation/javascript/examples/full/directions-simple
+     */
+    function initMap() {
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 7,
+            center: {lat: 41.85, lng: -87.65}
+        });
+        directionsRenderer.setMap(map);
+
+        const onChangeHandler = function () {
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        document.getElementById('submit').addEventListener('click', onChangeHandler);
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        directionsService.route(
+            {
+                origin: {query: document.getElementById('start').value},
+                destination: {query: document.getElementById('end').value},
+                travelMode: 'DRIVING'
+            },
+            function(response, status) {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyNO5HbthnD6uHpnzXfp2C8JbHP3Z3G3Y&callback=initMap">
+</script>
+</body>
+</html>
