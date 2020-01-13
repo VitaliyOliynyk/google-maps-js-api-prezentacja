@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h3>My Google Maps Demo</h3>
+<div id="map"></div>
+<div id="out"></div>
+<script>
+
+    function fromLatLngToDivPixel(latLng, map) {
+        var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+        var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+        var scale = Math.pow(2, map.getZoom());
+        var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
+        return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
+    }
+
+    function initMap() {
+        const warszawa = {lat: 52.237227, lng: 20.982026};
+        google.maps.Map.prototype.fromLatLngToDivPixel = function(latLng) {
+            let projection = this.getProjection();
+            let bounds = map.getBounds();
+            var topRight = projection.fromLatLngToPoint(bounds.getNorthEast());
+            var bottomLeft = projection.fromLatLngToPoint(bounds.getSouthWest());
+            var scale = Math.pow(2, map.getZoom());
+            var worldPoint = projection.fromLatLngToPoint(latLng);
+            return new google.maps.Point(
+                (worldPoint.x - bottomLeft.x) * scale,
+                (worldPoint.y - topRight.y) * scale
+            );
+        }
+
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: warszawa,
+            zoom: 16,
+
+        });
+        const marker = new google.maps.Marker({
+            position: warszawa,
+            map: map,
+            label: 'pz'
+        });
+
+        var mapPromise = new Promise((resolve) => {
+            map.addListener("idle", () => {
+                resolve(map);
+            });
+        });
+
+        function printPixel() {
+            mapPromise.then((map) => {
+                let pixel = map.fromLatLngToDivPixel(marker.getPosition());
+                document.getElementById("out").innerHTML = `${pixel.x}<br/>${pixel.y}`;
+            });
+        }
+        printPixel();
+
+        map.addListener('center_changed', printPixel);
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyNO5HbthnD6uHpnzXfp2C8JbHP3Z3G3Y&callback=initMap">
+</script>
+</body>
+</html>
